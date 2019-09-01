@@ -12,6 +12,6 @@ class AttributeController extends Controller
     }
     public function get($id)
     {
-        return Attribute::find($id)->firstOrFail();
+        return Attribute::findOrFail($id);
     }
 }

@@ -12,6 +12,6 @@ class UnitController extends Controller
     }
     public function get($id)
     {
-        return Unit::find($id)->firstOrFail();
+        return Unit::findOrFail($id);
     }
 }

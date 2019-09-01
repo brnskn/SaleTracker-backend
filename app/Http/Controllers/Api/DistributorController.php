@@ -12,6 +12,6 @@ class DistributorController extends Controller
     }
     public function get($id)
     {
-        return Distributor::find($id)->firstOrFail();
+        return Distributor::findOrFail($id);
     }
 }

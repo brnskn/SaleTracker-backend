@@ -45,5 +45,10 @@ Route::group(['namespace' => 'Api', 'middleware' => 'api'], function () {
             Route::get('/', 'DistributorController@list');
             Route::get('/{id}', 'DistributorController@get');
         });
+        Route::group(['prefix' => 'missions'], function () {
+            Route::get('/', 'MissionController@list');
+            Route::get('/{id}', 'MissionController@get');
+            Route::post('/{id}/mark_as_done', 'MissionController@mark_as_done');
+        });
     });
 });
