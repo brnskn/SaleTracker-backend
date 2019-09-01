@@ -5,10 +5,11 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasRoles, HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'phone', 'distributor_id',
     ];
 
     /**
@@ -36,9 +37,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+    protected $appends = [
+        'earnings',
+    ];
     public function activities()
     {
         return $this->hasMany('App\Activity');
+    }
+    public function transactions()
+    {
+        return $this->hasMany('App\UserTransaction');
+    }
+    public function missions()
+    {
+        return $this->hasMany('App\UserMission');
+    }
+    public function getEarningsAttribute()
+    {
+        return $this->transactions()->sum('price');
     }
 }

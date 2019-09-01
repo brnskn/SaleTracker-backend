@@ -18,6 +18,7 @@ class CreateMissionsTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->float('goal', 8, 2);
+            $table->float('award', 8, 2);
             $table->boolean('is_period')->default(false);
             $table->enum('period', ['daily', 'weekly', 'monthly'])->default('daily');
             $table->boolean('is_deadline')->default(false);

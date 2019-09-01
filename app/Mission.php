@@ -3,11 +3,24 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Plank\Metable\Metable;
 
 class Mission extends Model
 {
-    use Metable;
+    use SoftDeletes, Metable;
+    protected $fillable = [
+        'name',
+        'description',
+        'goal',
+        'award',
+        'is_period',
+        'period',
+        'is_deadline',
+        'deadline',
+        'distributor_id',
+        'unit_id',
+    ];
     protected $casts = [
         'deadline' => 'datetime',
     ];

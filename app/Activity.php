@@ -3,11 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Plank\Metable\Metable;
 
 class Activity extends Model
 {
-    use Metable;
+    use SoftDeletes, Metable;
+    protected $fillable = [
+        'name', 'description', 'user_id',
+    ];
     public function user()
     {
         return $this->belongsTo('App\User');
