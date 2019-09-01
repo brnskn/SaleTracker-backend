@@ -25,4 +25,12 @@ Route::group(['namespace' => 'Api', 'middleware' => 'api'], function () {
             Route::post('update', 'UserController@update');
         });
     });
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::group(['prefix' => 'activities'], function () {
+            Route::get('/', 'ActivityController@list');
+            Route::get('/{id}', 'ActivityController@get');
+            Route::post('/', 'ActivityController@create');
+            Route::post('/{id}', 'ActivityController@update');
+        });
+    });
 });

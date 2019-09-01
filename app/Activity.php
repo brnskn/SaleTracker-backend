@@ -12,6 +12,7 @@ class Activity extends Model
     protected $fillable = [
         'name', 'description', 'user_id',
     ];
+    protected $with = ['meta', 'user'];
     public function user()
     {
         return $this->belongsTo('App\User');
