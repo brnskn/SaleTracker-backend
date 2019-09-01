@@ -40,6 +40,7 @@ class User extends Authenticatable
     protected $appends = [
         'earnings',
     ];
+    protected $with = ['transactions'];
     public function activities()
     {
         return $this->hasMany('App\Activity');

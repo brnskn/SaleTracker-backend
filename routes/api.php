@@ -31,6 +31,19 @@ Route::group(['namespace' => 'Api', 'middleware' => 'api'], function () {
             Route::get('/{id}', 'ActivityController@get');
             Route::post('/', 'ActivityController@create');
             Route::post('/{id}', 'ActivityController@update');
+            Route::delete('/{id}', 'ActivityController@delete');
+        });
+        Route::group(['prefix' => 'attributes'], function () {
+            Route::get('/', 'AttributeController@list');
+            Route::get('/{id}', 'AttributeController@get');
+        });
+        Route::group(['prefix' => 'units'], function () {
+            Route::get('/', 'UnitController@list');
+            Route::get('/{id}', 'UnitController@get');
+        });
+        Route::group(['prefix' => 'distributors'], function () {
+            Route::get('/', 'DistributorController@list');
+            Route::get('/{id}', 'DistributorController@get');
         });
     });
 });

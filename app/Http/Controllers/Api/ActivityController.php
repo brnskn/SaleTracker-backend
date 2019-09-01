@@ -11,7 +11,8 @@ class ActivityController extends Controller
 {
     function list() {
         return merge_meta(
-            Activity::where('user_id', auth()->user()->id)->get()
+            Activity::where('user_id', auth()->user()->id)
+                ->get()
         );
     }
     public function get($id)
@@ -35,7 +36,11 @@ class ActivityController extends Controller
             "user_id" => $request->user()->id,
         ]);
         foreach ($attributes as $attribute) {
-            $activity->setMeta($attribute->name, $request->has($attribute->name) ? $request->{$attribute->name} : null);
+            $activity->setMeta(
+                $attribute->name,
+                $request->has($attribute->name) ?
+                $request->{$attribute->name} : null
+            );
         }
         return merge_meta($activity);
     }
@@ -46,15 +51,29 @@ class ActivityController extends Controller
             'description' => 'required|string',
         ], attribute_validation()));
         $attributes = Attribute::all();
-        $activity = Activity::findOrFail($request->id);
+        $activity = Activity::where('user_id', auth()->user()->id)
+            ->where('id', $request->id)
+            ->firstOrFail();
         $activity->update([
             "name" => $request->name,
             "description" => $request->description,
             "user_id" => $request->user()->id,
         ]);
         foreach ($attributes as $attribute) {
-            $activity->setMeta($attribute->name, $request->has($attribute->name) ? $request->{$attribute->name} : null);
+            $activity->setMeta(
+                $attribute->name,
+                $request->has($attribute->name) ?
+                $request->{$attribute->name} : null
+            );
         }
         return merge_meta($activity);
+    }
+    public function delete($id)
+    {
+        $activity = Activity::where('user_id', auth()->user()->id)
+            ->where('id', $id)
+            ->firstOrFail();
+        $activity->delete();
+        return ["message" => "Success"];
     }
 }
